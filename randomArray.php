@@ -1,6 +1,5 @@
 <?php
 
-
 $array = [];
 $count = 0;
 
@@ -80,9 +79,7 @@ $time = round(microtime(true) - $start, 6);
 echo "\n" . $time;
 
 
-
-
-
+//
 //function binarySearch(array $array, $item, $start = 0, $end = null)
 //{
 //    if ($end === null) {
