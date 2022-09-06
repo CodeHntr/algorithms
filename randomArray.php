@@ -3,6 +3,9 @@
 $array = [];
 $count = 0;
 
+$number = 0;
+$index = 0;
+
 $min = 0;
 $max = 0;
 $i = 0;
@@ -39,69 +42,97 @@ while ($i < $count) {
     $i++;
 }
 
-
-function linearSearch($numsArray)
-{
-    $keymax = 0;
-    $keymin = 0;
-    $max = 0;
-    $min = 0;
-    $i = 0;
-
-    foreach ($numsArray as $key => $value) {
-        if ($i == 0) {
-            $max = $value;
-            $min = $value;
-            $i = 1;
-        }
-
-        if ($value > $max) {
-            $max = $value;
-            $keymax = $key;
-        } elseif ($value < $min) {
-            $min = $value;
-            $keymin = $key;
-        }
-    }
-
-    echo "Індекс максимального значення: " . $keymax . " Саме максимальне значення: " . $max . "<\n>";
-    echo "Індекс мінімального значення: " . $keymin . " Саме мінімальне значення: " . $min . "<\n>";
-    return $keymax . $keymin . $max . $min;
-}
-
 echo "<pre/>";
 print_r($array);
 echo "<pre/>";
 
-$start = microtime(true);
-linearSearch($array);
-$time = round(microtime(true) - $start, 6);
-echo "\n" . $time;
+if (!$number) {
+    $number = readline("Введіть число для пошуку:");
+}
+
+function linearSearch($array, $number)
+{
+    foreach ($array as $key => $value) {
+        if ($value == $number) {
+            return $key;
+        }
+    }
+    return false;
+}
 
 
-//
-//function binarySearch(array $array, $item, $start = 0, $end = null)
+//function maxMinSearch($numsArray): int|string
 //{
-//    if ($end === null) {
-//        $end = count($array) - 1;
-//    }
+//    $keyMax = 0;
+//    $keyMin = 0;
+//    $max = 0;
+//    $min = 0;
+//    $i = 0;
 //
-//    if ($start > $end) {
-//        throw new LogicException("Item not found");
-//    }
-//
-//    $halfIndex = (int)(($start + $end) / 2);
-//
-//    if ($array[$halfIndex] !== $item) {
-//        if ($array[$halfIndex] < $item) {
-//            $start = $halfIndex + 1;
-//        } else {
-//            $end = $halfIndex - 1;
+//    foreach ($numsArray as $key => $value) {
+//        if ($i == 0) {
+//            $max = $value;
+//            $min = $value;
+//            $i = 1;
 //        }
 //
-//        return binarySearch($array, $item, $start, $end);
+//        if ($value > $max) {
+//            $max = $value;
+//            $keyMax = $key;
+//        } elseif ($value < $min) {
+//            $min = $value;
+//            $keyMin = $key;
+//        }
 //    }
-//    return $halfIndex;
-//}
 //
-//echo "<br>" . binarySearch($array, $item);
+//    echo "Індекс максимального значення: " . $keyMax . " Саме максимальне значення: " . $max . "<\n>";
+//    echo "Індекс мінімального значення: " . $keyMin . " Саме мінімальне значення: " . $min . "<\n>";
+//    return $keyMax . $keyMin . $max . $min;
+//}
+
+
+function binarySearch(array $array, $number)
+{
+    asort($array);
+    $start = array_key_first($array);
+    $end = array_key_last($array);
+
+    if ($start > $end) {
+        throw new LogicException("Item not found");
+    }
+
+    $halfIndex = ($start + $end) / 2;
+
+    if ($array[$halfIndex] !== $number) {
+        if ($array[$halfIndex] < $number) {
+            $start = $halfIndex + 1;
+        } else {
+            $end = $halfIndex - 1;
+        }
+
+        return binarySearch($array, $number);
+    }
+    return $halfIndex;
+}
+
+echo "Лінійний пошук  ";
+$startTime = microtime(true);
+$result = linearSearch($array, $number);
+echo "Результат лінійного пошуку: " . "\n";
+if ($result) {
+    echo "Число: " . $number . " Знайдене, іднекс у масиві: " . $result . "\n";
+} else {
+    echo "Число не знайдено \n";
+}
+$time = round(microtime(true) - $startTime, 6);
+echo "Час роботи функції 'linearSearch': " . $time . "\n";
+
+//$start = microtime(true);
+//maxMinSearch($array);
+//$time = round(microtime(true) - $start, 4);
+//echo "Час роботи функції 'maxMinSearch': " . $time . "<\n>";
+
+//echo "<br>" . binarySearch($array, $number);
+
+
+
