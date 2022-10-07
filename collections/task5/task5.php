@@ -1,11 +1,12 @@
 <?php
 
-require_once 'alg/task9/bubble.php';
-require_once 'alg/task9/insertSort.php';
-require_once 'alg/task9/mergeSort.php';
-require_once 'alg/task9/quickSort.php';
-require_once 'alg/task9/selectSort.php';
-require_once 'alg/task9/shellSort.php';
+require_once './task9/bubble.php';
+require_once './task9/insertSort.php';
+require_once './task9/mergeSort.php';
+require_once './task9/quickSort.php';
+require_once './task9/selectSort.php';
+require_once './task9/shellSort.php';
+
 
 class StaticRegulator
 {

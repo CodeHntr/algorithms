@@ -1,7 +1,7 @@
 <?php
 
 $example = 'codecool';
-$part1 = 'cdcl';
+$part1 = 'cdw';
 $part2 = 'oeoo';
 
 function stringMaker(string $part1, string $part2, string $example): bool

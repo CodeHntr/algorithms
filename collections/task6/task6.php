@@ -42,9 +42,9 @@ $users[] = new User(34, 3809915555, 'Ivan', 'Franko');
 $users[] = new User(39, 3805012515, 'Ivan', 'Franko');
 $users[] = new User(48, 3806715300, 'Ivan', 'Franko');
 
-echo '<pre>';
-print_r($users);
-echo '<pre/>';
+//echo '<pre>';
+//print_r($users);
+//echo '<pre/>';
 
 function sortByNumber($a, $b)
 {

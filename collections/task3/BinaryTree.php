@@ -20,13 +20,9 @@ class BinaryTree
     {
         $node = new BinaryNode($item);
         if ($this->isEmpty()) {
-
             $this->root = $node;
         } else {
-
             $this->insertNode($node, $this->root);
-
-
         }
     }
 
@@ -54,55 +50,64 @@ class BinaryTree
 
     public function searchNode(int $element)
     {
-        $l = 1;
-        $r = 1;
-
         if ($this->root->value === $element) {
-            $result = $this->root->value . " <= Значення було у корні дерева";
-            return $result;
+            return $this->root;
         } else {
             while (isset($this->root)) {
-
                 if ($this->root->value == $element) {
-                    if ($l > $r) {
-                        $result = $this->root->value . " <= Значення було у лівих гілках на рівні: " . $l;
-                        return $result;
-                    } else {
-                        $result = $this->root->value . " <= Значення було у правих гілках на рівні: " . $r;
-                        return $result;
-                    }
-                }
-
-                if ($this->root->value > $element) {
-                    if (isset($this->root->left)) {
-                        $this->root = $this->root->left;
-                        $l++;
-                    } else {
-                        $result = 'Значення нема.';
-                        return $result;
-                    }
+                    return $this->root;
+                } elseif ($this->root->value > $element && isset($this->root->left)) {
+                    $this->root = $this->root->left;
+                } elseif (isset($this->root->right)) {
+                    $this->root = $this->root->right;
                 } else {
-                    if (isset($this->root->right)) {
-                        $this->root = $this->root->right;
-                        $r++;
-                    } else {
-                        $result = 'Значення нема.';
-                        return $result;
-                    }
+                    return null;
                 }
             }
         }
     }
 
-    public function deleteAllLeaf($node)
+    public function delete($element, BinaryTree $tree)
+    {
+        $newTree = new BinaryTree();
+        $bool = true;
+
+            while ($bool === true) {
+                if ($tree->root->value === $element) {
+
+                } else {
+                    if (isset($tree->root->left) || isset($tree->root->right)) {
+
+                        if ($tree->root->value == $element) {
+                            $tree->root->value = $tree->root->right;
+                        } elseif ($tree->root->value > $element && isset($tree->root->left)) {
+                            $newTree->insert($tree->root->value);
+                            $tree->root = $tree->root->left;
+                        } elseif (isset($tree->root->right)) {
+                            $newTree->insert($tree->root->value);
+                            $tree->root = $tree->root->right;
+                        } else {
+                            return null;
+                        }
+                    } else {
+                        $bool = false;
+
+                    }
+                }
+            }
+        return $newTree;
+    }
+
+
+    public function deleteNode($node)
     {
         if ($node != NULL) {
             if ($node->left == NULL && $node->right == NULL) {
                 return NULL;
             }
 
-            $node->left = $this->deleteAllLeaf($node->left);
-            $node->right = $this->deleteAllLeaf($node->right);
+            $node->left = $this->deleteNode($node->left);
+            $node->right = $this->deleteNode($node->right);
             return $node;
         }
         return NULL;
@@ -114,32 +119,31 @@ $tree->insert(10);
 $tree->insert(8);
 $tree->insert(12);
 $tree->insert(1);
-$tree->insert(13);
-$tree->insert(6);
 $tree->insert(4);
 $tree->insert(9);
 $tree->insert(33);
 $tree->insert(15);
 $tree->insert(202);
 $tree->insert(3);
-
-
-echo "<pre>";
-print_r($tree);
-echo "<pre/>";
-
-$tree->root = $tree->deleteAllLeaf($tree->root);
-$tree->root = $tree->deleteAllLeaf($tree->root);
-$tree->root = $tree->deleteAllLeaf($tree->root);
-$tree->root = $tree->deleteAllLeaf($tree->root);
-$tree->root = $tree->deleteAllLeaf($tree->root);
+$tree->insert(13);
+$tree->insert(6);
 
 echo "<pre>";
 print_r($tree);
 echo "<pre/>";
 
-//$tree->delete(9);
+//$tree->root = $tree->deleteAllLeaf($tree->root);
+
+//$searchResult = $tree->searchNode(3);
+//
+//echo 'Результат пошуку :';
 //echo "<pre>";
-//print_r($tree);
+//print_r($searchResult);
 //echo "<pre/>";
 
+
+echo 'Результат видалення :';
+$tree->delete(202, $tree);
+echo "<pre>";
+print_r($tree);
+echo "<pre/>";
